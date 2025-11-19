@@ -893,7 +893,7 @@ const file_proto_vmmigrator_proto_rawDesc = "" +
 	"\bImportVM\x12\x1b.vmmigrator.ImportVMRequest\x1a\x1c.vmmigrator.ImportVMResponse\"\x002\xbe\x01\n" +
 	"\fOrchestrator\x12Y\n" +
 	"\x0eStartMigration\x12!.vmmigrator.StartMigrationRequest\x1a\".vmmigrator.StartMigrationResponse\"\x00\x12S\n" +
-	"\fGetMigration\x12\x1f.vmmigrator.GetMigrationRequest\x1a .vmmigrator.GetMigrationResponse\"\x00B\x18Z\x16vmmigrator/proto;protob\x06proto3"
+	"\fGetMigration\x12\x1f.vmmigrator.GetMigrationRequest\x1a .vmmigrator.GetMigrationResponse\"\x00B\x18Z\x16vmmigrator/proto/proto;protob\x06proto3"
 
 var (
 	file_proto_vmmigrator_proto_rawDescOnce sync.Once

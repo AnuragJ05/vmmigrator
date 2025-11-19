@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	pb "vmmigrator/proto"
+	pb "vmmigrator/proto/proto"
 )
 
 type server struct {

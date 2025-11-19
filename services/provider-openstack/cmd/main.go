@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	pb "vmmigrator/proto"
+	pb "vmmigrator/proto/proto"
 	"vmmigrator/services/provider-openstack/internal"
 
 	"google.golang.org/grpc"

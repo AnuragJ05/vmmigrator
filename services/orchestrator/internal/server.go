@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	pb "vmmigrator/proto"
+	pb "vmmigrator/proto/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
