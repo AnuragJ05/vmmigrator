@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package vmmigrator;
+option go_package = "vmmigrator/proto;proto";
+
+//import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Provider service: implemented per provider (vmware, openstack, ...)
+service Provider {
+  rpc ListVMs(ListVMsRequest) returns (ListVMsResponse) {}
+  rpc ExportVM(ExportVMRequest) returns (ExportVMResponse) {}
+  rpc ImportVM(ImportVMRequest) returns (ImportVMResponse) {}
+}
+
+message VMInfo {
+  string id = 1;
+  string name = 2;
+  int64 cpu = 3;
+  int64 memory_mb = 4;
+  repeated Disk disks = 5;
+}
+
+message Disk {
+  string id = 1;
+  int64 size_bytes = 2;
+  string format = 3;
+}
+
+message ListVMsRequest {
+  map<string, string> filters = 1;
+}
+
+message ListVMsResponse {
+  repeated VMInfo vms = 1;
+}
+
+message ExportVMRequest {
+  string vm_id = 1;
+  string staging_target = 2;
+}
+
+message ExportVMResponse {
+  string artifact_id = 1;
+  string message = 2;
+}
+
+message ImportVMRequest {
+  string artifact_id = 1;
+  map<string, string> opts = 2;
+}
+
+message ImportVMResponse {
+  string new_vm_id = 1;
+  string message = 2;
+}
+
+// Orchestrator API
+service Orchestrator {
+  rpc StartMigration(StartMigrationRequest) returns (StartMigrationResponse) {}
+  rpc GetMigration(GetMigrationRequest) returns (GetMigrationResponse) {}
+}
+
+message StartMigrationRequest {
+  string source_provider = 1;
+  string dest_provider = 2;
+  repeated string vm_ids = 3;
+  string staging_target = 4;
+}
+
+message StartMigrationResponse {
+  string job_id = 1;
+  string message = 2;
+}
+
+enum JobState {
+  UNKNOWN = 0;
+  QUEUED = 1;
+  RUNNING = 2;
+  FAILED = 3;
+  COMPLETED = 4;
+  CANCELLED = 5;
+}
+
+message GetMigrationRequest {
+  string job_id = 1;
+}
+
+message VMProgress {
+  string vm_id = 1;
+  JobState state = 2;
+  string message = 3;
+}
+
+message GetMigrationResponse {
+  string job_id = 1;
+  JobState state = 2;
+  repeated VMProgress vm_progress = 3;
+  google.protobuf.Timestamp started_at = 4;
+  google.protobuf.Timestamp finished_at = 5;
+}

@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  provider-vmware:
+    build:
+      context: ..
+      dockerfile: ./infra/Dockerfile.provider-vmware
+    ports:
+      - "50051:50051"
+
+  provider-openstack:
+    build:
+      context: ..
+      dockerfile: ./infra/Dockerfile.provider-openstack
+    ports:
+      - "50052:50052"
+
+  orchestrator:
+    build:
+      context: ..
+      dockerfile: ./infra/Dockerfile.orchestrator
+    depends_on:
+      - provider-vmware
+      - provider-openstack
+    ports:
+      - "50060:50060"
+
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: ./infra/Dockerfile.api-gateway
+    depends_on:
+      - orchestrator
+    ports:
+      - "8080:8080"
