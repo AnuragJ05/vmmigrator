@@ -6,6 +6,8 @@ services:
       dockerfile: ./infra/Dockerfile.provider-vmware
     ports:
       - "50051:50051"
+    volumes:
+      - ./staging:/staging
 
   provider-openstack:
     build:
@@ -13,6 +15,8 @@ services:
       dockerfile: ./infra/Dockerfile.provider-openstack
     ports:
       - "50052:50052"
+    volumes:
+      - ./staging:/staging
 
   orchestrator:
     build:
