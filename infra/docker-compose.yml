@@ -23,6 +23,9 @@ services:
       - provider-openstack
     ports:
       - "50060:50060"
+    environment:
+      - PROVIDER_VMWARE_ADDR=provider-vmware:50051
+      - PROVIDER_OPENSTACK_ADDR=provider-openstack:50052
 
   api-gateway:
     build:

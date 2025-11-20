@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -22,11 +23,20 @@ type server struct {
 }
 
 func NewServer() *server {
+	vmwareAddr := os.Getenv("PROVIDER_VMWARE_ADDR")
+	if vmwareAddr == "" {
+		vmwareAddr = "localhost:50051"
+	}
+	openstackAddr := os.Getenv("PROVIDER_OPENSTACK_ADDR")
+	if openstackAddr == "" {
+		openstackAddr = "localhost:50052"
+	}
+
 	return &server{
 		jobs: make(map[string]*pb.GetMigrationResponse),
 		providerEndpoints: map[string]string{
-			"vmware":    "localhost:50051",
-			"openstack": "localhost:50052",
+			"vmware":    vmwareAddr,
+			"openstack": openstackAddr,
 		},
 	}
 }
