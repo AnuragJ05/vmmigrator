@@ -113,6 +113,18 @@ go run ./services/orchestrator/cmd
 go run ./services/api-gateway/cmd
 ```
 
+
+cd ~/vmmigrator
+
+# ensure proto is generated
+make generate
+
+# rebuild images from scratch
+docker compose -f infra/docker-compose.yml build --no-cache
+
+# run
+docker compose -f infra/docker-compose.yml up
+
 ---
 
 # 📡 Test Migration API
